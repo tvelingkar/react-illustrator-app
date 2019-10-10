@@ -2,23 +2,27 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import AddTodo from './AddTodo/AddTodo';
+import TodoItem from './TodoItem/TodoItem';
+import {removeTodo} from "./actions/todos";
 
-const TodoList = (props) => {
+const TodoList = ({todoList, removeTodo}) => {
+    const handleItemClick = (todoItem) => {
+        removeTodo(todoItem);
+    }
+
     return (
-        <div className="todoListMain">
+        <>
             <div className="container align-middle">
                 <AddTodo/>
             </div>
             <div className="container-fluid">
-                <ul className="list-group">
-                    {props
-                        .todoList
-                        .map((todo, index) => <li
-                            className="list-group-item"
-                            key={index}>{todo.title}</li>)}
-                </ul>
+                {
+                    todoList.length
+                    ? todoList.map((todo, index) => <TodoItem key={index} todoItem={todo} handleItemClick={handleItemClick}/>)
+                        : <p className="text-center">No Items to display</p>
+                }
             </div>
-        </div>
+        </>
     );
 }
 
@@ -26,4 +30,10 @@ const mapStateToProps = state => ({
     todoList: state.todos.todoList || []
 })
 
-export default connect(mapStateToProps)(TodoList);
+const mapDispatchToProps = {
+    removeTodo
+};
+
+TodoList.whyDidYouRender = true
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
