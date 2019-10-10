@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "React Illustrator App",
+  "name": "A React starter app to illustrate usage of various features in React programming",
   "icons": [
     {
       "src": "favicon.ico",
