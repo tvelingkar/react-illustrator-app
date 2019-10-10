@@ -7,6 +7,11 @@ import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store/configureStore';
 
+if (process.env.NODE_ENV !== 'production') {
+    const whyDidYouRender = require('@welldone-software/why-did-you-render');
+    whyDidYouRender(React);
+}
+
 const store = configureStore();
 
 ReactDOM.render(

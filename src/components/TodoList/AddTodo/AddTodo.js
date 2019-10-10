@@ -19,6 +19,8 @@ class AddTodo extends Component {
             .bind(this);
     }
 
+    static whyDidYouRender = true
+
     render() {
         return (
             <form onSubmit={this.handleSubmit} className="d-flex p-2 bd-highlight">
@@ -35,7 +37,6 @@ class AddTodo extends Component {
                         <button className="btn btn-primary" type="submit" id="button-addon2">Add Task</button>
                     </div>
                 </div>
-                <span>{this.props.title}</span>
             </form>
         );
     }
