@@ -2,6 +2,8 @@
 
 A React starter app to illustrate usage of various features in React programming
 
+![Thumbnail of Midnight](public/logo192.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
