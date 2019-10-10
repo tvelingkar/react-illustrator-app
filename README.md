@@ -1,4 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Illustrator App
+
+A React starter app to illustrate usage of various features in React programming
+
+![Thumbnail of Midnight](public/logo192.png)
 
 ## Available Scripts
 
