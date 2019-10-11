@@ -30,11 +30,11 @@ class AddTodo extends Component {
                         className="form-control"
                         placeholder="Task Title"
                         aria-label="Task Title"
-                        aria-describedby="button-addon2"
+                        aria-describedby="button-submit"
                         value={this.state.title}
                         onChange={this.handleTitleChange}/>
                     <div className="input-group-append">
-                        <button className="btn btn-primary" type="submit" id="button-addon2">Add Task</button>
+                        <button className="btn btn-primary" type="submit" id="button-submit">Add Task</button>
                     </div>
                 </div>
             </form>
@@ -58,10 +58,8 @@ class AddTodo extends Component {
     }
 }
 
-const mapStateToProps = state => state;
-
 const mapDispatchToProps = {
     addTodo
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
+export default connect(null, mapDispatchToProps)(AddTodo);
