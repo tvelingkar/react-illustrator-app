@@ -5,7 +5,7 @@ import AddTodo from './AddTodo/AddTodo';
 import TodoItem from './TodoItem/TodoItem';
 import {removeTodo} from "./actions/todos";
 
-const TodoList = ({todoList, removeTodo}) => {
+const TodoPage = ({todoList, removeTodo}) => {
     const handleItemClick = (todoItem) => {
         removeTodo(todoItem);
     }
@@ -15,13 +15,11 @@ const TodoList = ({todoList, removeTodo}) => {
             <div className="container align-middle">
                 <AddTodo/>
             </div>
-            <div className="container-fluid">
-                {
-                    todoList.length
-                    ? todoList.map((todo, index) => <TodoItem key={index} todoItem={todo} handleItemClick={handleItemClick}/>)
-                        : <p className="text-center">No Items to display</p>
-                }
-            </div>
+            {
+                todoList.length
+                ? todoList.map((todo, index) => <TodoItem key={index} todoItem={todo} handleItemClick={handleItemClick}/>)
+                    : <p className="text-center">No Items to display</p>
+            }
         </>
     );
 }
@@ -34,6 +32,6 @@ const mapDispatchToProps = {
     removeTodo
 };
 
-TodoList.whyDidYouRender = true
+TodoPage.whyDidYouRender = true
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoPage);

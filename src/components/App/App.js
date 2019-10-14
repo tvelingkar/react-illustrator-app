@@ -1,12 +1,12 @@
 import React from 'react';
 
 import './App.css';
-import TodoList from '../TodoList/TodoList';
+import TodoPage from '../TodoPage/TodoPage';
 
 const App = () => {
     return (
         <div className="container-fluid">
-            <TodoList todoList={[]} />
+            <TodoPage />
         </div>
     );
 }
