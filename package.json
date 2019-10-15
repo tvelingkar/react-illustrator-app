@@ -26,6 +26,16 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": [
+          "transform-react-constant-elements",
+          "transform-react-inline-elements"
+        ]
+      }
+    }
+  },
   "devDependencies": {
     "@welldone-software/why-did-you-render": "^3.3.7",
     "eslint": "^6.5.1",
