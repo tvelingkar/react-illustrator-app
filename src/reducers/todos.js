@@ -7,7 +7,7 @@ const todos = (state = {
         let todoList = state
             .todoList
             .slice()
-        todoList.splice(0, 0, { title: action.data.title });
+        todoList.splice(0, 0, { todoID: action.todoID, title: action.data.title });
         return {
             ...state,
             todoList
@@ -17,7 +17,7 @@ const todos = (state = {
         let todoList = state
             .todoList
             .slice()
-        let index = todoList.indexOf(action.data)
+        let index = todoList.findIndex(item => item.todoID === action.todoID);
         todoList.splice(index, 1);
         return {
             ...state,

@@ -17,7 +17,7 @@ const TodoPage = ({todoList, removeTodo}) => {
             </div>
             {
                 todoList.length
-                ? todoList.map((todo, index) => <TodoItem key={index} todoItem={todo} handleItemClick={handleItemClick}/>)
+                ? todoList.map((todo) => <TodoItem key={todo.todoID} todoItem={todo} handleItemClick={handleItemClick}/>)
                     : <p className="text-center">No Items to display</p>
             }
         </>
