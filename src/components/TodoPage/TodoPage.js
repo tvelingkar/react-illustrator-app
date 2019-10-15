@@ -3,21 +3,16 @@ import {connect} from 'react-redux';
 
 import AddTodo from './AddTodo/AddTodo';
 import TodoItem from './TodoItem/TodoItem';
-import {removeTodo} from "./actions/todos";
 
-const TodoPage = ({todoList, removeTodo}) => {
-    const handleItemClick = (todoID) => {
-        removeTodo(todoID);
-    }
-
+const TodoPage = ({todoList}) => {
     return (
         <>
             <div className="container align-middle">
                 <AddTodo/>
             </div>
             {
-                todoList.length
-                ? todoList.map((todo) => <TodoItem key={todo.todoID} todoItem={todo} handleItemClick={handleItemClick}/>)
+                todoList && todoList.length
+                    ? todoList.map((todo) => <TodoItem key={todo.todoID} todoItem={todo}/>)
                     : <p className="text-center">No Items to display</p>
             }
         </>
@@ -28,10 +23,6 @@ const mapStateToProps = state => ({
     todoList: state.todos.todoList || []
 })
 
-const mapDispatchToProps = {
-    removeTodo
-};
-
 TodoPage.whyDidYouRender = true
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoPage);
+export default connect(mapStateToProps)(TodoPage);
