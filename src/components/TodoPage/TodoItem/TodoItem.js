@@ -1,9 +1,7 @@
 import React from 'react'
 
 const TodoItem = ({ todoItem, handleItemClick}) => {
-    const onItemClick = () => {
-        handleItemClick(todoItem);
-    }
+    const onItemClick = () => handleItemClick(todoItem.todoID);
 
     return (
         <div className="card m-1">

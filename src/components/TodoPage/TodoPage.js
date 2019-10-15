@@ -6,8 +6,8 @@ import TodoItem from './TodoItem/TodoItem';
 import {removeTodo} from "./actions/todos";
 
 const TodoPage = ({todoList, removeTodo}) => {
-    const handleItemClick = (todoItem) => {
-        removeTodo(todoItem);
+    const handleItemClick = (todoID) => {
+        removeTodo(todoID);
     }
 
     return (

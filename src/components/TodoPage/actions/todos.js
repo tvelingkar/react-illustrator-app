@@ -8,7 +8,7 @@ export const addTodo = data => ({
     data
 })
 
-export const removeTodo = data => ({
+export const removeTodo = todoID => ({
     type: actionTypes.REMOVE_TODO,
-    data
+    todoID
 })
