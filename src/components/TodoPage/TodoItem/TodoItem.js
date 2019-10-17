@@ -5,13 +5,11 @@ import {removeTodo} from "../actions/todos";
 
 const TodoItem = ({todoItem, removeTodo}) => {
     return (
-        <div className="card m-1">
-            <div className="card-header">
-                {todoItem.title}
-                <button type="button" className="close" aria-label="Close" onClick={removeTodo}>
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div className="card-header m-2 rounded">
+            <span>{todoItem.title}</span>
+            <button type="button" className="close" aria-label="Close" onClick={removeTodo}>
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     );
 }

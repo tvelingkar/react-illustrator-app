@@ -12,3 +12,8 @@ export const removeTodo = todoID => ({
     type: actionTypes.REMOVE_TODO,
     todoID
 })
+
+export const resetAddState = data => ({
+    type: actionTypes.RESET_ADD_TODO,
+    data
+})

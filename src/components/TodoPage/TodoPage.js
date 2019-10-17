@@ -1,20 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import AddTodo from './AddTodo/AddTodo';
 import TodoItem from './TodoItem/TodoItem';
 
 const TodoPage = ({todoList}) => {
     return (
         <>
-            <div className="container align-middle">
-                <AddTodo/>
-            </div>
+            <h1 className="display-4 text-uppercase m-2">Todo List</h1>
+            <div>
             {
                 todoList && todoList.length
                     ? todoList.map((todo) => <TodoItem key={todo.todoID} todoItem={todo}/>)
-                    : <p className="text-center">No Items to display</p>
+                    : <p className="text-center m-0 p-5">No Items to display</p>
             }
+            </div>
         </>
     );
 }
