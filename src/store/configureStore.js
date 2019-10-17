@@ -9,7 +9,9 @@ const configureStore = () => {
     const store = createStore(rootReducer, initialState);
     store.subscribe(throttle(() => {
         saveState({
-            todos: store.getState().todos
+            todos: {
+                todoList: store.getState().todos.todoList
+            }
         });
     }, 1000));
     return store;

@@ -1,7 +1,8 @@
 import * as actionTypes from '../constants/actionTypes';
 
 const todos = (state = {
-    todoList: []
+    todoList: [],
+    isAddSuccess: false
 }, action) => {
     if (action.type === actionTypes.ADD_TODO) {
         let todoList = state
@@ -10,7 +11,8 @@ const todos = (state = {
         todoList.splice(0, 0, { todoID: action.todoID, title: action.data.title });
         return {
             ...state,
-            todoList
+            todoList,
+            isAddSuccess: true
         };
     }
     if (action.type === actionTypes.REMOVE_TODO) {
@@ -22,6 +24,12 @@ const todos = (state = {
         return {
             ...state,
             todoList
+        };
+    }
+    if (action.type === actionTypes.RESET_ADD_TODO) {
+        return {
+            ...state,
+            isAddSuccess: false
         };
     }
     return state;

@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {addTodo} from "../actions/todos";
+import {addTodo, resetAddState} from "../actions/todos";
+import {Redirect} from "react-router-dom";
 
-const AddTodo = ({addTodo}) => {
-    const [title, setTitle] = useState('');
-    const [isComplete, setIsComplete] = useState(false);
+const AddTodo = ({addTodo, resetAddState, todos}) => {
+    const [title,
+        setTitle] = useState('');
+    const [isComplete,
+        setIsComplete] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -23,7 +26,13 @@ const AddTodo = ({addTodo}) => {
         setIsComplete(true);
     }
 
-    return (
+    if (todos.isAddSuccess) {
+        resetAddState();
+    }
+
+    return todos.isAddSuccess ? (
+        <Redirect to='/' />
+    ) : (
         <form onSubmit={handleSubmit} className="d-flex p-2 bd-highlight">
             <div className="input-group mb-3">
                 <input
@@ -33,7 +42,7 @@ const AddTodo = ({addTodo}) => {
                     aria-label="Task Title"
                     aria-describedby="button-submit"
                     value={title}
-                    onChange={handleTitleChange} />
+                    onChange={handleTitleChange}/>
                 <div className="input-group-append">
                     <button className="btn btn-primary" type="submit" id="button-submit">Add Task</button>
                 </div>
@@ -42,10 +51,13 @@ const AddTodo = ({addTodo}) => {
     );
 }
 
+const mapStateToProps = state => state;
+
 const mapDispatchToProps = {
-    addTodo
+    addTodo,
+    resetAddState
 };
 
 AddTodo.whyDidYouRender = true;
 
-export default connect(null, mapDispatchToProps)(AddTodo);
+export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
