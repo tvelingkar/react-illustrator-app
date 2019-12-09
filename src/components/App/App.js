@@ -2,10 +2,10 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import './App.css';
-import TodoPage from '../TodoPage/TodoPage';
-import Footer from '../Footer/Footer';
-import Navbar from '../Navbar/Navbar';
-import AddTodo from '../TodoPage/AddTodo/AddTodo';
+import TodoPage from '../TodoPage';
+import Footer from '../Footer';
+import Navbar from '../Navbar';
+import AddTodo from '../TodoPage/AddTodo';
 
 const App = () => {
     return (
