@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom";
 import { Button, Form } from 'carbon-components-react';
 
 import './AddTodo.scss';
+import AccessControl from '../../common/AccessControl/AccessControl';
+import * as Constants from '../../../constants';
 
 const AddTodo = ({ addTodo, resetAddState, todos }) => {
     const [title,
@@ -36,23 +38,30 @@ const AddTodo = ({ addTodo, resetAddState, todos }) => {
     return todos.isAddSuccess ? (
         <Redirect to='/' />
     ) : (
-            <Form onSubmit={handleSubmit}>
-                <section>
-                    <div class="bx--form-item">
-                        <label for="text1" class="bx--label">Task Title</label>
-                        <input
-                            type="text"
-                            class="bx--text__input"
-                            placeholder="Task Title"
-                            value={title}
-                            onChange={handleTitleChange}
-                        />
-                    </div>
-                </section>
-                <Button type="submit">
-                    Add Task
+            <AccessControl
+                role="visitor"
+                perform={Constants.PageActions.AddTodo.pageVisit}
+                yes={() => (
+                    <Form onSubmit={handleSubmit}>
+                        <section>
+                            <div class="bx--form-item">
+                                <label for="text1" class="bx--label">Task Title</label>
+                                <input
+                                    type="text"
+                                    class="bx--text__input"
+                                    placeholder="Task Title"
+                                    value={title}
+                                    onChange={handleTitleChange}
+                                />
+                            </div>
+                        </section>
+                        <Button type="submit">
+                            Add Task
                 </Button>
-            </Form>
+                    </Form>
+                )}
+                no={() => (<Redirect to='/' />)}
+            />
         );
 }
 

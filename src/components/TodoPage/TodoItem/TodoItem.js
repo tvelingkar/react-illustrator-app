@@ -4,6 +4,8 @@ import { Button, ListItem } from 'carbon-components-react';
 
 import { removeTodo } from "../actions/todos";
 
+import './TodoItem.scss';
+
 const TodoItem = ({ todoItem, removeTodo }) => {
     return (
         <ListItem title={todoItem.title}>

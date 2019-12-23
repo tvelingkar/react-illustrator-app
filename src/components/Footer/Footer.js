@@ -4,8 +4,8 @@ import './Footer.scss';
 
 const Footer = () => {
     return (
-        <footer className="copyright text-center fixed-bottom">
-            <div className="container">
+        <footer class="copyright text-center fixed-bottom">
+            <div class="container">
                 <small class='copyright-text'>Copyright &copy; Todo App 2019</small>
             </div>
         </footer>
