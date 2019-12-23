@@ -57,7 +57,7 @@ const AddTodo = ({ addTodo, resetAddState, todos }) => {
                         </section>
                         <Button type="submit">
                             Add Task
-                </Button>
+                        </Button>
                     </Form>
                 )}
                 no={() => (<Redirect to='/' />)}

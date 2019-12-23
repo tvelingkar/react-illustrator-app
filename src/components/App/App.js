@@ -2,20 +2,23 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import './App.scss';
+import Auth from '../Auth';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import Routes from '../Routes';
 
 const App = () => {
     return (
-        <Router>
-            <Navbar />
+        <Auth>
+            <Router>
+                <Navbar />
 
-            <div class="container" id='main-content'>
-                <Routes />
-                <Footer />
-            </div>
-        </Router>
+                <div className="container" id='main-content'>
+                    <Routes />
+                    <Footer />
+                </div>
+            </Router>
+        </Auth>
     );
 }
 App.whyDidYouRender = true
