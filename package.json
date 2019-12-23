@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@ibm/plex": "^4.0.2",
+    "carbon-components": "^10.7.4",
+    "carbon-components-react": "^7.7.4",
+    "carbon-icons": "^7.0.7",
     "lodash": "^4.17.15",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
@@ -39,6 +43,7 @@
   },
   "devDependencies": {
     "@welldone-software/why-did-you-render": "^3.3.7",
-    "eslint-plugin-react": "^7.16.0"
+    "eslint-plugin-react": "^7.16.0",
+    "node-sass": "^4.13.0"
   }
 }

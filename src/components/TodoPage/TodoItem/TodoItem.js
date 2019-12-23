@@ -1,16 +1,23 @@
 import React from 'react'
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { Button, ListItem } from 'carbon-components-react';
 
-import {removeTodo} from "../actions/todos";
+import { removeTodo } from "../actions/todos";
 
-const TodoItem = ({todoItem, removeTodo}) => {
+const TodoItem = ({ todoItem, removeTodo }) => {
     return (
-        <div className="card-header m-2 rounded">
-            <span>{todoItem.title}</span>
-            <button type="button" className="close" aria-label="Close" onClick={removeTodo}>
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        <ListItem title={todoItem.title}>
+            <div class="bx--grid">
+                <div class="bx--row">
+                    <span class="bx--col-sm-3">{todoItem.title}</span>
+                    <span class="bx--col-sm-1 text-center">
+                        <Button onClick={removeTodo}>
+                            <span aria-hidden="true">&times;</span>
+                        </Button>
+                    </span>
+                </div>
+            </div>
+        </ListItem>
     );
 }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
+import './index.scss';
 import * as serviceWorker from './serviceWorker';
-import Root from './components/Root';
+import Root from './components/Root/Root';
 
 if (process.env.NODE_ENV !== 'production') {
     const whyDidYouRender = require('@welldone-software/why-did-you-render');

@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {addTodo, resetAddState} from "../actions/todos";
-import {Redirect} from "react-router-dom";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { addTodo, resetAddState } from "../actions/todos";
+import { Redirect } from "react-router-dom";
+import { Button, Form } from 'carbon-components-react';
 
-const AddTodo = ({addTodo, resetAddState, todos}) => {
+import './AddTodo.scss';
+
+const AddTodo = ({ addTodo, resetAddState, todos }) => {
     const [title,
         setTitle] = useState('');
     const [isComplete,
@@ -33,22 +36,24 @@ const AddTodo = ({addTodo, resetAddState, todos}) => {
     return todos.isAddSuccess ? (
         <Redirect to='/' />
     ) : (
-        <form onSubmit={handleSubmit} className="d-flex p-2 bd-highlight">
-            <div className="input-group mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Task Title"
-                    aria-label="Task Title"
-                    aria-describedby="button-submit"
-                    value={title}
-                    onChange={handleTitleChange}/>
-                <div className="input-group-append">
-                    <button className="btn btn-primary" type="submit" id="button-submit">Add Task</button>
-                </div>
-            </div>
-        </form>
-    );
+            <Form onSubmit={handleSubmit}>
+                <section>
+                    <div class="bx--form-item">
+                        <label for="text1" class="bx--label">Task Title</label>
+                        <input
+                            type="text"
+                            class="bx--text__input"
+                            placeholder="Task Title"
+                            value={title}
+                            onChange={handleTitleChange}
+                        />
+                    </div>
+                </section>
+                <Button type="submit">
+                    Add Task
+                </Button>
+            </Form>
+        );
 }
 
 const mapStateToProps = state => state;

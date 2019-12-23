@@ -1,29 +1,19 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import './App.css';
-import TodoPage from '../TodoPage';
+import './App.scss';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
-import AddTodo from '../TodoPage/AddTodo';
+import Routes from '../Routes';
 
 const App = () => {
     return (
         <Router>
-            <div id="page-top">
-                <Navbar/>
+            <Navbar />
 
-                <header className="masthead bg-primary text-white text-center">
-                    <div className="container">
-                        <Switch>
-                            <Route path="/add-todo" component={AddTodo}/>
-                            <Route path="/" component={TodoPage} />
-                            <Route component={TodoPage}/>
-                        </Switch>
-                    </div>
-                </header>
-
-                <Footer/>
+            <div className="container" id='main-content'>
+                <Routes />
+                <Footer />
             </div>
         </Router>
     );

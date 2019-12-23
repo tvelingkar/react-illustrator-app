@@ -1,19 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import TodoItem from './TodoItem';
+import TodoItem from './TodoItem/TodoItem';
+import { OrderedList, Tile } from 'carbon-components-react';
 
 const TodoPage = ({todoList}) => {
     return (
         <>
-            <h1 className="display-4 text-uppercase m-2">Todo List</h1>
-            <div>
+            <h1 className="text-center">Todo List</h1>
+            <OrderedList>
             {
                 todoList && todoList.length
                     ? todoList.map((todo) => <TodoItem key={todo.todoID} todoItem={todo}/>)
-                    : <p className="text-center m-0 p-5">No Items to display</p>
+                    : <Tile><p className="text-center">No Items to display</p></Tile>
             }
-            </div>
+            </OrderedList>
         </>
     );
 }
