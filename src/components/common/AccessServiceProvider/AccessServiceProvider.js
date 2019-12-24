@@ -1,6 +1,6 @@
 import rules from "./libraries/rbac-rules";
 
-const check = (rules, role, action, data) => {
+const authorize = (rules, role, action, data) => {
     const permissions = rules[role];
     if (!permissions) {
         // role is not present in the rules
@@ -28,14 +28,14 @@ const check = (rules, role, action, data) => {
     return false;
 };
 
-const AccessControl = props =>
-    check(rules, props.role, props.perform, props.data)
-        ? props.yes()
-        : props.no();
+const AccessServiceProvider = props =>
+    authorize(rules, props.role, props.perform, props.data)
+        ? props.onAllow()
+        : props.onDeny();
 
-AccessControl.defaultProps = {
-    yes: () => null,
-    no: () => null
+AccessServiceProvider.defaultProps = {
+    onAllow: () => null,
+    onDeny: () => null
 };
 
-export default AccessControl;
+export default AccessServiceProvider;

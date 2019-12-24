@@ -26,6 +26,7 @@ const rules = {
         "users:get",
         "users:getSelf",
         "home-page:visit",
+        "home-page:add-post",
         "dashboard-page:visit"
       ]
     }

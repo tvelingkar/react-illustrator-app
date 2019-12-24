@@ -9,8 +9,17 @@ const Auth = (props) => {
     });
     const [accessToken, setAccessToken] = useState("");
 
-    const initiateLogin = () => {
-console.log('Call Login API')
+    const initiateLogin = (username) => {
+        setAuthenticated(true);
+        if (username === 'admin') {
+            setUser({
+                role: "admin"
+            });
+        } else if (username === 'visitor') {
+            setUser({
+                role: "visitor"
+            });
+        }
     };
 
     const logout = () => {

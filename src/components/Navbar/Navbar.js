@@ -15,7 +15,8 @@ import {
 } from "carbon-components-react/lib/components/UIShell";
 
 import './Navbar.scss';
-import AccessControl from '../common/AccessControl';
+import AccessServiceProvider from '../common/AccessServiceProvider';
+import { AuthConsumer } from '../../libraries/authContext';
 
 const Fade16 = () => (
     <svg
@@ -31,6 +32,9 @@ const Fade16 = () => (
 
 const Navbar = () => {
     return (
+        <AuthConsumer>
+    {({ user }) =>
+      (
         <HeaderContainer
             render={({ isSideNavExpanded, onClickSideNavExpand }) => (
                 <>
@@ -43,10 +47,10 @@ const Navbar = () => {
                         />
                         <HeaderName href="#" prefix="Todo App"></HeaderName>
                         <HeaderGlobalBar>
-                            <AccessControl
-                                role="visitor"
-                                perform="home-page:visit"
-                                yes={() => (
+                            <AccessServiceProvider
+                                role={user.role}
+                                perform="home-page:add-post"
+                                onAllow={() => (
                                     <Link to="/add-todo">
                                         <HeaderGlobalAction aria-label="App Switcher">
                                             <Add20 />
@@ -69,6 +73,8 @@ const Navbar = () => {
                 </>
             )}
         />
+      )}
+      </AuthConsumer>
     );
 }
 

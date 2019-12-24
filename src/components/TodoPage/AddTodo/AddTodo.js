@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { Button, Form } from 'carbon-components-react';
 
 import './AddTodo.scss';
-import AccessControl from '../../common/AccessControl/AccessControl';
+import AccessServiceProvider from '../../common/AccessServiceProvider/AccessServiceProvider';
 import * as Constants from '../../../constants';
 
 const AddTodo = ({ addTodo, resetAddState, todos }) => {
@@ -38,11 +38,11 @@ const AddTodo = ({ addTodo, resetAddState, todos }) => {
     return todos.isAddSuccess ? (
         <Redirect to='/' />
     ) : (
-            <AccessControl
+            <AccessServiceProvider
                 role="visitor"
                 perform={Constants.PageActions.AddTodo.pageVisit}
-                yes={() => (
-                    <Form onSubmit={handleSubmit}>
+                onAllow={() => (
+                    <Form id="ria-add-todo-page" onSubmit={handleSubmit}>
                         <section>
                             <div class="bx--form-item">
                                 <label for="text1" class="bx--label">Task Title</label>
@@ -60,7 +60,7 @@ const AddTodo = ({ addTodo, resetAddState, todos }) => {
                         </Button>
                     </Form>
                 )}
-                no={() => (<Redirect to='/' />)}
+                onDeny={() => (<Redirect to='/' />)}
             />
         );
 }

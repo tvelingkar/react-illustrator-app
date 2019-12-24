@@ -6,18 +6,12 @@ import Auth from '../Auth';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import Routes from '../Routes';
+import HomePage from '../HomePage/HomePage';
 
 const App = () => {
     return (
         <Auth>
-            <Router>
-                <Navbar />
-
-                <div className="container" id='main-content'>
-                    <Routes />
-                    <Footer />
-                </div>
-            </Router>
+            <HomePage />
         </Auth>
     );
 }
