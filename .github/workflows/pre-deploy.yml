@@ -6,8 +6,8 @@ on:
     types: [assigned, opened, synchronize, reopened]
 
 jobs:
-  build:
-    name: Build
+  build_test:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     strategy:
@@ -37,11 +37,5 @@ jobs:
       env:
         CI: true
 
-  test:
-    name: Test
-    needs: [build]
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Run test
       run: yarn test
