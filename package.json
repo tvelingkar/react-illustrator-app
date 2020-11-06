@@ -22,10 +22,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "doctoc": "doctoc ./.github --title '## Table of Contents'",
-    "format": "prettier --write '**/*.{js,ts,md,mdx,scss,json}' '!**/{coverage,.cache,public,node_modules}/**'",
-    "format:diff": "prettier --list-different '**/*.{js,ts,md,mdx,scss}' '!**/{coverage,.cache,public,node_modules}/**'",
+    "format": "prettier src/**/*.{js,md,mdx,scss,json} --write",
+    "format:check": "prettier src/**/*.{js,md,mdx,scss,json} --check",
+    "format:diff": "prettier src/**/*.{js,md,mdx,scss,json} --list-different",
     "lint": "yarn lint:styles && yarn lint:js",
-    "lint:js": "yarn eslint . --ext .{js,ts}",
+    "lint:js": "yarn eslint . --ext .js",
     "lint:styles": "yarn sass-lint 'src/**/*.scss -v -q'"
   },
   "eslintConfig": {
