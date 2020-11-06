@@ -1,5 +1,5 @@
 export const PageActions = {
-    AddTodo: {
-        pageVisit: "add-todo-page:visit"
-    }
-}
+  AddTodo: {
+    pageVisit: 'add-todo-page:visit',
+  },
+};
