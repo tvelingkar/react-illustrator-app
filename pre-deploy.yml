@@ -26,12 +26,17 @@ jobs:
       run: npx audit-ci -m
 
     - name: Run linters
-      run: yarn --frozen-lockfile
-
-    - name: Run build and test
       run: |
-        yarn build
-        yarn test
+        yarn format:check
+        yarn lint
+
+    - name: Run accessibility checks
+      run: ./bin/run_accessibility_checks.sh
+      env:
+        APP_NAME: react-illustrator-app
+
+    - name: Run build
+      run: yarn build
       env:
         CI: true
 
@@ -41,9 +46,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Run build and test
-      run: |
-        yarn build
-        yarn test
-      env:
-        CI: true
+    - name: Run test
+      run: yarn test
