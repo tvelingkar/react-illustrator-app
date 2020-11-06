@@ -32,11 +32,6 @@ jobs:
         yarn format:check
         yarn lint
 
-    - name: Run accessibility checks
-      run: ./bin/run_accessibility_checks.sh
-      env:
-        APP_NAME: react-illustrator-app
-
     - name: Run build
       run: yarn build
       env:
