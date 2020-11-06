@@ -1,0 +1,11 @@
+# merged with default sass-lint rules https://github.com/sasstools/sass-lint/blob/master/lib/config/sass-lint.yml
+rules:
+  class-name-format:
+    - 1
+    - convention: hyphenatedbem
+  force-pseudo-nesting: 0
+  indentation:
+    - 2
+    - size: 2
+  no-color-literals: 0
+  no-transition-all: 0
