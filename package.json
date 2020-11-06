@@ -20,7 +20,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "doctoc": "doctoc ./.github --title '## Table of Contents'",
+    "format": "prettier --write '**/*.{js,ts,md,mdx,scss,json}' '!**/{coverage,.cache,public,node_modules}/**'",
+    "format:diff": "prettier --list-different '**/*.{js,ts,md,mdx,scss}' '!**/{coverage,.cache,public,node_modules}/**'",
+    "lint": "yarn lint:styles && yarn lint:js",
+    "lint:js": "yarn eslint . --ext .{js,ts}",
+    "lint:styles": "yarn sass-lint 'src/**/*.scss -v -q'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,7 +49,11 @@
   },
   "devDependencies": {
     "@welldone-software/why-did-you-render": "^3.3.7",
+    "doctoc": "^1.4.0",
+    "eslint": "^7.12.1",
     "eslint-plugin-react": "^7.16.0",
-    "node-sass": "^4.13.0"
+    "node-sass": "^4.13.0",
+    "prettier": "^2.1.2",
+    "sass-lint": "^1.13.1"
   }
 }
