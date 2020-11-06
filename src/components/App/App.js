@@ -9,11 +9,11 @@ import Routes from '../Routes';
 import HomePage from '../HomePage/HomePage';
 
 const App = () => {
-    return (
-        <Auth>
-            <HomePage />
-        </Auth>
-    );
-}
-App.whyDidYouRender = true
+  return (
+    <Auth>
+      <HomePage />
+    </Auth>
+  );
+};
+App.whyDidYouRender = true;
 export default App;
