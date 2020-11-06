@@ -8,6 +8,7 @@
     "carbon-components-react": "^7.7.4",
     "carbon-icons": "^7.0.7",
     "lodash": "^4.17.15",
+    "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.1.1",
@@ -58,7 +59,6 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "node-sass": "^5.0.0",
     "prettier": "^2.1.2",
     "sass-lint": "^1.13.1"
   }
