@@ -38,14 +38,14 @@ const Navbar = () => {
         <HeaderContainer
             render={({ isSideNavExpanded, onClickSideNavExpand }) => (
                 <>
-                    <Header aria-label="Todo App">
+                    <Header aria-label="React Illustrator App">
                         <SkipToContent />
                         <HeaderMenuButton
                             aria-label="Open menu"
                             onClick={onClickSideNavExpand}
                             isActive={isSideNavExpanded}
                         />
-                        <HeaderName href="#" prefix="Todo App"></HeaderName>
+                        <HeaderName href="#" prefix="React Illustrator App"></HeaderName>
                         <HeaderGlobalBar>
                             <AccessServiceProvider
                                 role={user.role}
