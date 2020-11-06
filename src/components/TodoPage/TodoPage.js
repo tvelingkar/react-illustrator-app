@@ -9,13 +9,13 @@ import './TodoPage.scss';
 const TodoPage = ({ todoList }) => {
   return (
     <>
-      <h1 class='text-center'>Todo List</h1>
+      <h1 className='text-center'>Todo List</h1>
       <OrderedList>
         {todoList && todoList.length ? (
           todoList.map(todo => <TodoItem key={todo.todoID} todoItem={todo} />)
         ) : (
           <Tile>
-            <p class='text-center'>No Items to display</p>
+            <p className='text-center'>No Items to display</p>
           </Tile>
         )}
       </OrderedList>

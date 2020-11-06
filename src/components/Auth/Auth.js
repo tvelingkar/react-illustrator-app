@@ -7,7 +7,7 @@ const Auth = props => {
   const [user, setUser] = useState({
     role: 'visitor',
   });
-  const [accessToken, setAccessToken] = useState('');
+  const [accessToken, /*setAccessToken*/] = useState('');
 
   const initiateLogin = username => {
     setAuthenticated(true);
@@ -28,7 +28,7 @@ const Auth = props => {
     setSession();
   };
 
-  const setSession = authResult => {};
+  const setSession = () => {};
 
   const authProviderValue = {
     authenticated,

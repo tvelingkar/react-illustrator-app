@@ -18,19 +18,19 @@ const Login = () => {
   return (
     <AuthConsumer>
       {({ initiateLogin }) => (
-        <div class='ria-login-page'>
-          <div class='main-container'>
+        <div className='ria-login-page'>
+          <div className='main-container'>
             <p>ToDo App</p>
             <Form>
-              <p class='login-form-title'>Sign In to Page</p>
+              <p className='login-form-title'>Sign In to Page</p>
               <section>
-                <div class='bx--form-item'>
-                  <label for='text1' class='bx--label'>
+                <div className='bx--form-item'>
+                  <label htmlFor='text1' className='bx--label'>
                     Enter UserID or Email
                   </label>
                   <input
                     type='text'
-                    class='bx--text__input'
+                    className='bx--text__input'
                     value={username}
                     onChange={handleUsernameChange}
                   />

@@ -9,10 +9,10 @@ import './TodoItem.scss';
 const TodoItem = ({ todoItem, removeTodo }) => {
   return (
     <ListItem title={todoItem.title}>
-      <div class='bx--grid'>
-        <div class='bx--row'>
-          <span class='bx--col-sm-3'>{todoItem.title}</span>
-          <span class='bx--col-sm-1 text-center'>
+      <div className='bx--grid'>
+        <div className='bx--row'>
+          <span className='bx--col-sm-3'>{todoItem.title}</span>
+          <span className='bx--col-sm-1 text-center'>
             <Button onClick={removeTodo}>
               <span aria-hidden='true'>&times;</span>
             </Button>

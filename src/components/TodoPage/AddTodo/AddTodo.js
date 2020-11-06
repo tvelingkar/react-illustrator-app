@@ -42,13 +42,13 @@ const AddTodo = ({ addTodo, resetAddState, todos }) => {
       onAllow={() => (
         <Form id='ria-add-todo-page' onSubmit={handleSubmit}>
           <section>
-            <div class='bx--form-item'>
-              <label for='text1' class='bx--label'>
+            <div className='bx--form-item'>
+              <label htmlFor='text1' className='bx--label'>
                 Task Title
               </label>
               <input
                 type='text'
-                class='bx--text__input'
+                className='bx--text__input'
                 placeholder='Task Title'
                 value={title}
                 onChange={handleTitleChange}
