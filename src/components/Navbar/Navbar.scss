@@ -73,7 +73,8 @@
     width: 0;
   }
 
-  .bx--side-nav:not(.bx--side-nav--fixed):hover, .bx--side-nav--expanded {
+  .bx--side-nav:not(.bx--side-nav--fixed):hover,
+  .bx--side-nav--expanded {
     width: 16rem;
   }
 }
