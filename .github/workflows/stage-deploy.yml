@@ -11,7 +11,7 @@ env:
 
 jobs:
   test:
-    name: Pre-deploy test
+    name: Build and Test
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,14 +27,17 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      run: yarn --frozen-lockfile
-      
-    - name: Run build and test
       run: |
-        yarn build
-        yarn test
+        yarn --frozen-lockfile
+        npx audit-ci -m
+
+    - name: Run build
+      run: yarn build
       env:
         CI: true
+
+    - name: Run test
+      run: yarn test
 
   deploy:
     name: Deploy

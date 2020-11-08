@@ -22,10 +22,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Run test setup
+      run: |
+        npx audit-ci -m
+        npm install -g npm-check-updates
+
+    - name: Check package updates
+      run: ncu
+
     - name: Install dependencies
       run: |
         yarn --frozen-lockfile
-        npx audit-ci -m
 
     - name: Run linters
       run: |

@@ -1,0 +1,6 @@
+{
+    "concurrency": 10,
+    "dep": "prod, dev, peer, optional, bundle",
+    "errorLevel": 2,
+    "packageManager": "yarn"
+}
