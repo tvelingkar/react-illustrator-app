@@ -3,5 +3,6 @@
     "dep": "prod, dev, peer, optional, bundle",
     "errorLevel": 2,
     "minimal": true,
-    "packageManager": "yarn"
+    "packageManager": "yarn",
+    "reject": "node-sass"
 }
