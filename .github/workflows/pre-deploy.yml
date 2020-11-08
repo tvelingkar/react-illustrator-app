@@ -22,13 +22,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Run test setup
+    - name: Run setup
+      run: npm install -g npm-check-updates
+
+    - name: Run audit and check package versions
       run: |
         npx audit-ci -m
-        npm install -g npm-check-updates
-
-    - name: Check package updates
-      run: ncu
+        ncu
 
     - name: Install dependencies
       run: |
