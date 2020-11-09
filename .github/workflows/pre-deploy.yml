@@ -39,7 +39,7 @@ jobs:
         yarn lint
 
     - name: Detect bugs, vulnerabilities and code smells
-    - uses: mathrix-education/sonar-scanner@master
+      uses: mathrix-education/sonar-scanner@master
       with:
         version: 4.5.0.2216
         typescript: false
