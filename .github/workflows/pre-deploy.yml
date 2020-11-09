@@ -1,4 +1,4 @@
-name: Pre-deploy Workflow
+name: Pre-Deploy Workflow
 
 on:
   pull_request:
