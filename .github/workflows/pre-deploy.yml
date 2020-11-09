@@ -39,6 +39,14 @@ jobs:
         yarn format:check
         yarn lint
 
+    - name: Detect bugs, vulnerabilities and code smells
+    - uses: mathrix-education/sonar-scanner@master
+      with:
+        version: 4.5.0.2216
+        typescript: false
+        scan: true
+        args: --debug -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
     - name: Run build
       run: yarn build
       env:
