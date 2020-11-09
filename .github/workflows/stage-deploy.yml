@@ -2,12 +2,13 @@ name: Stage Deploy Workflow
 
 on:
   push:
-    branches: develop
+    branches: master
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  PROJECT: dev-ops-pipeline
-  APP_NAME: dev-ops-pipeline
+  CIO_USER: ${{ secrets.CIO_USER }}
+  CIO_PASSWORD: ${{ secrets.CIO_PASSWORD }}
+  APP_VERSION: 1.0.0
 
 jobs:
   test:
@@ -46,17 +47,5 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Set up the oc CLI, authenticate and deploy to OpenShift
-    - name: Set up oc CLI and deploy to OpenShift
-      uses: redhat-developer/openshift-actions@v2.1.0
-      with:
-        version: '4.3'
-        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
-        parameters: '{"apitoken": "${{ secrets.OPENSHIFT_API_TOKEN }}", "acceptUntrustedCerts": "true"}'
-        cmd: |
-          oc project ${PROJECT}
-          oc new-app ${GITHUB_WORKSPACE} --name ${APP_NAME}
-    # Expose the service created by using the oc CLI installed previously
-    - name: Execute additional oc commands
-      run: |
-        oc expose svc/${{ env.APP_NAME }}
+    - name: Run Cirrus deployment
+      run: sh ./bin/run_cirrus_deploy.sh
