@@ -1,4 +1,4 @@
-name: Build and Test
+name: Pre-deploy Workflow
 
 on:
   pull_request:
@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Run setup
+    - name: Set up pre-requisites
       run: npm install -g npm-check-updates
 
     - name: Run audit and check package versions
@@ -31,13 +31,20 @@ jobs:
         ncu
 
     - name: Install dependencies
-      run: |
-        yarn --frozen-lockfile
+      run: yarn --frozen-lockfile
 
     - name: Run linters
       run: |
         yarn format:check
         yarn lint
+
+    - name: Detect bugs, vulnerabilities and code smells
+    - uses: mathrix-education/sonar-scanner@master
+      with:
+        version: 4.5.0.2216
+        typescript: false
+        scan: true
+        args: --debug -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
     - name: Run build
       run: yarn build

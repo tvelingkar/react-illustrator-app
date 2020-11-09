@@ -1,4 +1,4 @@
-name: Deploy Stage
+name: Stage Deploy Workflow
 
 on:
   push:
@@ -27,9 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      run: |
-        yarn --frozen-lockfile
-        npx audit-ci -m
+      run: yarn --frozen-lockfile
 
     - name: Run build
       run: yarn build
@@ -54,7 +52,7 @@ jobs:
       with:
         version: '4.3'
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
-        parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
+        parameters: '{"apitoken": "${{ secrets.OPENSHIFT_API_TOKEN }}", "acceptUntrustedCerts": "true"}'
         cmd: |
           oc project ${PROJECT}
           oc new-app ${GITHUB_WORKSPACE} --name ${APP_NAME}
