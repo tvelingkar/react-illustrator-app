@@ -1,4 +1,4 @@
-#mainNav {
+/* #mainNav {
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-weight: 700;
@@ -61,5 +61,20 @@
   }
   #mainNav.navbar-shrink .navbar-brand {
     font-size: 1.5em;
+  }
+} */
+
+@media (min-width: 66rem) {
+  .bx--header__menu-toggle__hidden {
+    display: block;
+  }
+
+  .bx--side-nav--ux {
+    width: 0;
+  }
+
+  .bx--side-nav:not(.bx--side-nav--fixed):hover,
+  .bx--side-nav--expanded {
+    width: 16rem;
   }
 }

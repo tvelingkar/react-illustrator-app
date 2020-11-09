@@ -1,0 +1,53 @@
+name: Pre-Deploy Workflow
+
+on:
+  pull_request:
+    branches: develop
+    types: [assigned, opened, synchronize, reopened]
+
+jobs:
+  build_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.18.3]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Set up pre-requisites
+      run: npm install -g npm-check-updates
+
+    - name: Run audit and check package versions
+      run: |
+        npx audit-ci -m
+        ncu
+
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+
+    - name: Run linters
+      run: |
+        yarn format:check
+        yarn lint
+
+    - name: Detect bugs, vulnerabilities and code smells
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    - name: Run build
+      run: yarn build
+      env:
+        CI: true
+
+    - name: Run test
+      run: yarn test

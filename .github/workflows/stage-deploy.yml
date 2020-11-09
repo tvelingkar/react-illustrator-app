@@ -1,0 +1,51 @@
+name: Stage Deploy Workflow
+
+on:
+  push:
+    branches: master
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  CIO_USER: ${{ secrets.CIO_USER }}
+  CIO_PASSWORD: ${{ secrets.CIO_PASSWORD }}
+  APP_VERSION: 1.0.0
+
+jobs:
+  test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.18.3]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+
+    - name: Run build
+      run: yarn build
+      env:
+        CI: true
+
+    - name: Run test
+      run: yarn test
+
+  deploy:
+    name: Deploy
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Run Cirrus deployment
+      run: sh ./bin/run_cirrus_deploy.sh

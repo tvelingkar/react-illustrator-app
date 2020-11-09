@@ -1,23 +1,32 @@
-import React from 'react'
-import {connect} from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Button, ListItem } from 'carbon-components-react';
 
-import {removeTodo} from "../actions/todos";
+import { removeTodo } from '../actions/todos';
 
-const TodoItem = ({todoItem, removeTodo}) => {
-    return (
-        <div className="card-header m-2 rounded">
-            <span>{todoItem.title}</span>
-            <button type="button" className="close" aria-label="Close" onClick={removeTodo}>
-                <span aria-hidden="true">&times;</span>
-            </button>
+import './TodoItem.scss';
+
+const TodoItem = ({ todoItem, removeTodo }) => {
+  return (
+    <ListItem title={todoItem.title}>
+      <div className='bx--grid'>
+        <div className='bx--row'>
+          <span className='bx--col-sm-3'>{todoItem.title}</span>
+          <span className='bx--col-sm-1 text-center'>
+            <Button onClick={removeTodo}>
+              <span aria-hidden='true'>&times;</span>
+            </Button>
+          </span>
         </div>
-    );
-}
+      </div>
+    </ListItem>
+  );
+};
 
-TodoItem.whyDidYouRender = true
+TodoItem.whyDidYouRender = true;
 
 const mapDispatchToProps = {
-    removeTodo
+  removeTodo,
 };
 
 export default connect(null, mapDispatchToProps)(TodoItem);

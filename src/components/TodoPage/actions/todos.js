@@ -1,19 +1,19 @@
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
-import * as actionTypes from '../../../constants/actionTypes';
+import * as ActionTypes from '../../../constants';
 
 export const addTodo = data => ({
-    type: actionTypes.ADD_TODO,
-    todoID: uuidv4(),
-    data
-})
+  type: ActionTypes.ADD_TODO,
+  todoID: uuidv4(),
+  data,
+});
 
 export const removeTodo = todoID => ({
-    type: actionTypes.REMOVE_TODO,
-    todoID
-})
+  type: ActionTypes.REMOVE_TODO,
+  todoID,
+});
 
 export const resetAddState = data => ({
-    type: actionTypes.RESET_ADD_TODO,
-    data
-})
+  type: ActionTypes.RESET_ADD_TODO,
+  data,
+});
