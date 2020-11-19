@@ -40,7 +40,7 @@ jobs:
 
     - name: Run Sonar scan
       run: |
-        jest
+        yarn test
         sudo keytool -import -alias intermediate -file ./node_modules/@commerce-platform/scripts/certs/dbg-sonarqubertpraleighibmcom.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt
         curl $SONAR_URL --fail --insecure; if [ $? -eq 0 ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner -Dsonar.host.url=${SONAR_URL} -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit; fi
 
