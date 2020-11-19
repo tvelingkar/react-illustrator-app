@@ -39,17 +39,17 @@ jobs:
         yarn lint
 
     - name: Run Sonar scan
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        jest
+        sudo keytool -import -alias intermediate -file ./node_modules/@commerce-platform/scripts/certs/dbg-sonarqubertpraleighibmcom.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt
+        curl $SONAR_URL --fail --insecure; if [ $? -eq 0 ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner -Dsonar.host.url=${SONAR_URL} -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit; fi
 
     - name: Run Static App Scan
       run: sh ./bin/SAST.sh
       env: 
         APPSCAN_APPNAME: "Static-Auth0-Sample"
-        APPSCAN_TOKEN: ""
-        APPSCAN_SECRET: ""
+        APPSCAN_TOKEN: "Test"
+        APPSCAN_SECRET: "Test"
         APPSCAN_WAIT: true
         APPSCAN_WAIT_TIMEOUT: 600
         APPSCAN_NEW_ISSUE_LIMIT: 5
@@ -58,7 +58,7 @@ jobs:
         APPSCAN_LOW_ISSUE_LIMIT: 3
         APPSCAN_TOTAL_ISSUE_LIMIT: 5
         APPSCAN_BOX_EMAIL: "Tushar.Velingkar1@ibm.com"
-        APPSCAN_SLACK_HOOK: ""
+        APPSCAN_SLACK_HOOK: "Test"
 
     - name: Run build
       run: yarn build
