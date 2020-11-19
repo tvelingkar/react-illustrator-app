@@ -42,10 +42,7 @@ jobs:
         yarn lint
 
     - name: Run Sonar scan
-      run: |
-        yarn test
-        sudo keytool -import -alias intermediate -file ./certs/dbg-sonarqubertpraleighibmcom.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt
-        curl $SONAR_URL --fail --insecure; if [ $? -eq 0 ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner -Dsonar.host.url=${SONAR_URL} -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit; fi
+      run: yarn test
 
     - name: Run Static App Scan
       run: sh ./bin/SAST.sh
@@ -67,6 +64,3 @@ jobs:
       run: yarn build
       env:
         CI: true
-
-    - name: Run test
-      run: yarn test
