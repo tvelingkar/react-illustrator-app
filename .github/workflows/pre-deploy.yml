@@ -38,11 +38,34 @@ jobs:
         yarn format:check
         yarn lint
 
-    - name: Detect bugs, vulnerabilities and code smells
+    - name: Run Sonar scan
       uses: sonarsource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    - name: Run Static App Scan
+      run: sh ./bin/SAST.sh
+      env: 
+        //Scan application name from ASoC portal
+        APPSCAN_APPNAME: "Static-Auth0-Sample"
+        APPSCAN_TOKEN: ""
+        APPSCAN_SECRET: ""
+        //Only submit scan and continue or wait and fetch scan results
+        APPSCAN_WAIT: true
+        //Max time to wait for scan to complete, timeout doesn't cause build to fail
+        APPSCAN_WAIT_TIMEOUT: 600
+        //Break the build on number of issues detected [only +ve numbers activate the quality gates]
+        APPSCAN_NEW_ISSUE_LIMIT: 5
+        APPSCAN_HIGH_ISSUE_LIMIT: 1
+        APPSCAN_MED_ISSUE_LIMIT: 2
+        APPSCAN_LOW_ISSUE_LIMIT: 3
+        APPSCAN_TOTAL_ISSUE_LIMIT: 5
+        //Email-id for the box folder to upload scan reports
+        APPSCAN_BOX_EMAIL: "Tushar.Velingkar1@ibm.com"
+        //Location of the scan config file [only in case of non-default filename and location]
+        //APPSCAN_CONFIG_FILE: "scan-cnf/submodule-appscan-config.xml"
+        APPSCAN_SLACK_HOOK: ""
 
     - name: Run build
       run: yarn build
