@@ -61,7 +61,6 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.1.2",
-    "sass-lint": "^1.13.1",
-    "@commerce-platform/scripts": "latest"
+    "sass-lint": "^1.13.1"
   }
 }
