@@ -29,7 +29,8 @@
     "format:diff": "prettier src/**/*.{js,md,mdx,scss,json} --list-different",
     "lint": "yarn lint:styles && yarn lint:js",
     "lint:js": "yarn eslint . --ext .js",
-    "lint:styles": "yarn sass-lint 'src/**/*.scss -v -q'"
+    "lint:styles": "yarn sass-lint 'src/**/*.scss -v -q'",
+    "sonar": "node sonar-project.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -13,10 +13,10 @@ set -e
 
 #Notify Slack
 notify(){
-    echo -e $1
+    echo -e "$1"
     body="[${BUILD_ENGINE}: ${SAST_JOB_NAME}: ${BUILD_NUM}] ${1}"
     if [[ ${APPSCAN_SLACK_HOOK} && $1 ]]; then
-        status=`curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'"$body"'"}' $APPSCAN_SLACK_HOOK`
+        status=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'"$body"'"}' "$APPSCAN_SLACK_HOOK")
         echo "Slack notification: ${status}"
     fi
 }
@@ -80,7 +80,7 @@ set_variables(){
             BUILD_NUM=""
             echo "Running in non CI/CD env, scan job name is: ${SAST_JOB_NAME}"
         else
-            SAST_JOB_NAME=$(echo $TRAVIS_REPO_SLUG | cut -d'/' -f 2)_${TRAVIS_BRANCH}
+            SAST_JOB_NAME=$(echo "$TRAVIS_REPO_SLUG" | cut -d'/' -f 2)_${TRAVIS_BRANCH}
             BUILD_ENGINE="Travis-CI"
             BUILD_NUM=${TRAVIS_BUILD_NUMBER}
             unset _JAVA_OPTIONS
@@ -90,7 +90,7 @@ set_variables(){
         if [[ -z $GIT_URL || -z $GIT_BRANCH ]]; then
             SAST_JOB_NAME=${JOB_BASE_NAME}
         else
-            SAST_JOB_NAME=$(basename ${GIT_URL} .git)_$(basename ${GIT_BRANCH})
+            SAST_JOB_NAME=$(basename "${GIT_URL}" .git)_$(basename "${GIT_BRANCH}")
         fi
         BUILD_ENGINE="Jenkins"
         BUILD_NUM=${BUILD_NUMBER}
@@ -98,20 +98,20 @@ set_variables(){
     fi
     
     #Trim whitespace from job name is any
-    SAST_JOB_NAME=$(echo $SAST_JOB_NAME | tr ' ' '-')
+    SAST_JOB_NAME=$(echo "$SAST_JOB_NAME" | tr ' ' '-')
 }
 
 install_client(){
     #Check if appscan CLI is already available, and install if not
     if type "appscan.sh" > /dev/null 2>&1; then
-        client_version=`appscan.sh version | head -1`
+        client_version=$(appscan.sh version | head -1)
         echo "SAST client already installed, version: ${client_version}"
     else
         echo "SAST client not available, downloading"    
-        curl -s https://cloud.appscan.com/api/SCX/StaticAnalyzer/SAClientUtil?os=linux -o $HOME/SAClientUtil.zip
-        extdir=`unzip -Z -1 $HOME/SAClientUtil.zip | head -1 | cut -d "/" -f1`
-        unzip -q -n $HOME/SAClientUtil.zip -d $HOME/
-        rm -f $HOME/SAClientUtil.zip
+        curl -s https://cloud.appscan.com/api/SCX/StaticAnalyzer/SAClientUtil?os=linux -o "$HOME"/SAClientUtil.zip
+        extdir=$(unzip -Z -1 "$HOME"/SAClientUtil.zip | head -1 | cut -d "/" -f1)
+        unzip -q -n "$HOME"/SAClientUtil.zip -d "$HOME"/
+        rm -f "$HOME"/SAClientUtil.zip
         clientpath="$HOME/${extdir}/bin"
         export PATH="$clientpath:$PATH"
         echo "SAST client setup is complete"
@@ -120,16 +120,16 @@ install_client(){
 
 get_app_id(){
     #Login to AppScan on Cloud
-    resp=`appscan.sh api_login -u $APPSCAN_TOKEN -P $APPSCAN_SECRET -persist`
+    resp=$(appscan.sh api_login -u "$APPSCAN_TOKEN" -P "$APPSCAN_SECRET" -persist)
     if [[ "$resp" == "Authenticated successfully." ]]; then
-        echo $resp
+        echo "$resp"
     else
         echo "Please verify the appscan_token and secret"
         return 1
     fi
 
     #Retrieve app-id for provided app-name
-    appscan_appid=`appscan.sh list_apps | grep $APPSCAN_APPNAME | awk '{print $3}'`
+    appscan_appid=$(appscan.sh list_apps | grep "$APPSCAN_APPNAME" | awk '{print $3}')
     if [[ -z $appscan_appid ]]; then
         echo "No application could be found with name ${APPSCAN_APPNAME} Please check the appscan_appname"
         return 1
@@ -143,9 +143,9 @@ generate_scan_file(){
     echo ""
     echo "Generating irx file"
     if [[ -z $APPSCAN_CONFIG_FILE ]]; then
-        appscan.sh prepare -n ${SAST_JOB_NAME}.irx
+        appscan.sh prepare -n "${SAST_JOB_NAME}".irx
     elif [[ -f ${WORKSPACE}/${APPSCAN_CONFIG_FILE} ]]; then
-        appscan.sh prepare -c ${APPSCAN_CONFIG_FILE} -n ${SAST_JOB_NAME}.irx
+        appscan.sh prepare -c "${APPSCAN_CONFIG_FILE}" -n "${SAST_JOB_NAME}".irx
     else
         echo "Invalid scan config path: ${APPSCAN_CONFIG_FILE}, Cannot generate irx file"
         return 1
@@ -160,8 +160,8 @@ generate_scan_file(){
 
 submit_new_scan(){
     #Submit scan on cloud and retrieve job-id
-    now=`date +%Y-%m-%d_%H-%M-%S`
-    appscan_jobid=`appscan.sh queue_analysis -a $appscan_appid -f ${SAST_JOB_NAME}.irx -n ${SAST_JOB_NAME}_${now} | tail -1`
+    now=$(date +%Y-%m-%d_%H-%M-%S)
+    appscan_jobid=$(appscan.sh queue_analysis -a "$appscan_appid" -f "${SAST_JOB_NAME}".irx -n "${SAST_JOB_NAME}"_"${now}" | tail -1)
     if [[ -z appscan_jobid || ${#appscan_jobid} -ne 36 ]]; then
         echo "Failed to submit scan, invalid scan id: '${appscan_jobid}'"
         return 1
@@ -170,23 +170,23 @@ submit_new_scan(){
     fi
 
     #Retrieve scan status
-    scan_status=`appscan.sh status -i $appscan_jobid`
+    scan_status=$(appscan.sh status -i "$appscan_jobid")
 }
 
 get_scan_results(){
-    waiting_since=`date +%s`
+    waiting_since=$(date +%s)
     echo "Waiting for scan to complete"
     while true
     do
-        echo "Scan status: "$scan_status
+        echo "Scan status: ""$scan_status"
         if [[ "$scan_status" == "Pending" || "$scan_status" == "Running" || "$scan_status" == "Starting" || \
             "$scan_status" == "Initiating" || "$scan_status" == "FinishedRunning" || "$scan_status" == "InQueue" ]]; then
-            if [[ $(expr $(date +%s) - $waiting_since) -gt $wait_timeout ]]; then
+            if [[ $(expr $(date +%s) - "$waiting_since") -gt $wait_timeout ]]; then
                 msg="Scan wait time limit of ${wait_timeout} seconds reached, "
                 break
             else
                 sleep 15
-                scan_status=`appscan.sh status -i $appscan_jobid`
+                scan_status=$(appscan.sh status -i "$appscan_jobid")
             fi
         else
             break
@@ -201,22 +201,22 @@ get_scan_results(){
         return 0
     else
         echo "Retrieving scan result"
-        scan_results=`appscan.sh info -i $appscan_jobid | grep LastSuccessfulExecution | cut -d "=" -f2`
+        scan_results=$(appscan.sh info -i "$appscan_jobid" | grep LastSuccessfulExecution | cut -d "=" -f2)
     
-        NIssues=`echo $scan_results | jq '.NIssuesFound'`
-        NNewAppIssues=`echo $scan_results | jq '.NNewAppIssues'`
-        NHighIssues=`echo $scan_results | jq '.NHighIssues'`
-        NMediumIssues=`echo $scan_results | jq '.NMediumIssues'`
-        NLowIssues=`echo $scan_results | jq '.NLowIssues'`
-        NInfoIssues=`echo $scan_results | jq '.NInfoIssues'`
+        NIssues=$(echo "$scan_results" | jq '.NIssuesFound')
+        NNewAppIssues=$(echo "$scan_results" | jq '.NNewAppIssues')
+        NHighIssues=$(echo "$scan_results" | jq '.NHighIssues')
+        NMediumIssues=$(echo "$scan_results" | jq '.NMediumIssues')
+        NLowIssues=$(echo "$scan_results" | jq '.NLowIssues')
+        NInfoIssues=$(echo "$scan_results" | jq '.NInfoIssues')
 
-        appscan.sh get_result -i $appscan_jobid -d ${SAST_JOB_NAME}_${now}_SAST.html -t html
+        appscan.sh get_result -i "$appscan_jobid" -d "${SAST_JOB_NAME}"_"${now}"_SAST.html -t html
         
         if [[ -f ${SAST_JOB_NAME}_${now}_SAST.html ]]; then
             REPORT_FILE_NAME=${SAST_JOB_NAME}_${now}_SAST.html
             
             if [[ "$BUILD_ENGINE" == "Jenkins" ]]; then
-                echo ${SAST_JOB_NAME}_${now}_SAST.html > REPORT_FILE_NAME.txt
+                echo "${SAST_JOB_NAME}"_"${now}"_SAST.html > REPORT_FILE_NAME.txt
             fi
         else
             echo "Failed to download scan HTML report"
@@ -228,15 +228,15 @@ get_scan_results(){
 generate_pdf_report(){
     if [[ ! -z $REPORT_FILE_NAME && ! -z $APPSCAN_BOX_EMAIL ]]; then
         #Obtain access token for API requests
-        status=$(curl -w %{http_code} -s -H 'Content-Type: application/json' -d '{"KeyId":"'$APPSCAN_TOKEN'","KeySecret":"'$APPSCAN_SECRET'"}' \
+        status=$(curl -w "${http_code}" -s -H 'Content-Type: application/json' -d '{"KeyId":"'"$APPSCAN_TOKEN"'","KeySecret":"'"$APPSCAN_SECRET"'"}' \
             -X POST https://cloud.appscan.com/api/v2/Account/ApiKeyLogin -o token.json) 
             
         if [[ "$status" -eq 200 ]]; then
             acc_token=$(cat token.json | jq -r '.Token')
             #Request for PDF report
             echo "Requesting scan report in PDF format"
-            status=$(curl -w %{http_code} -s -H 'Content-Type: application/json' -H 'Authorization: Bearer '$acc_token -d "$(generate_payload)" \
-                -X POST https://cloud.appscan.com/api/v2/Reports/Security/Scan/$appscan_jobid -o report_req.json)
+            status=$(curl -w "${http_code}" -s -H 'Content-Type: application/json' -H 'Authorization: Bearer '"$acc_token" -d "$(generate_payload)" \
+                -X POST https://cloud.appscan.com/api/v2/Reports/Security/Scan/"$appscan_jobid" -o report_req.json)
                 
             if [[ "$status" -eq 200 ]]; then
                 reportid=$(cat report_req.json | jq -r '.Id')
@@ -244,8 +244,8 @@ generate_pdf_report(){
                 while true
                 do
                     #Check PDF report request status
-                    status=$(curl -w %{http_code} -s -H 'Content-Type: application/json' -H 'Authorization: Bearer '$acc_token \
-                        https://cloud.appscan.com/api/v2/Reports/$reportid -o report_status.json)
+                    status=$(curl -w "${http_code}" -s -H 'Content-Type: application/json' -H 'Authorization: Bearer '"$acc_token" \
+                        https://cloud.appscan.com/api/v2/Reports/"$reportid" -o report_status.json)
                         
                     if [[ "$status" -eq 200 ]]; then
                         report_status=$(cat report_status.json | jq -r '.Status')
@@ -254,15 +254,15 @@ generate_pdf_report(){
                         if [[ "$report_status" == "Ready" ]]; then
                             if [[ "$progress" -eq 100 ]]; then
                                 #Download PDF report
-                                status=$(curl -w %{http_code} -s -H 'Content-Type: application/json' -H 'Accept: application/octet-stream' \
-                                    -H 'Authorization: Bearer '$acc_token https://cloud.appscan.com/api/v2/Reports/Download/$reportid -o ${SAST_JOB_NAME}_${now}_SAST.pdf)
+                                status=$(curl -w "${http_code}" -s -H 'Content-Type: application/json' -H 'Accept: application/octet-stream' \
+                                    -H 'Authorization: Bearer '"$acc_token" https://cloud.appscan.com/api/v2/Reports/Download/"$reportid" -o "${SAST_JOB_NAME}"_"${now}"_SAST.pdf)
                                 
                                 if [[ "$status" -eq 200 && -f ${SAST_JOB_NAME}_${now}_SAST.pdf ]]; then
                                     echo "Scan report successfully downloaded as PDF"
                                     
                                     #Save report file name in text for box upload in post build step
                                     REPORT_FILE_NAME=${SAST_JOB_NAME}_${now}_SAST.pdf
-                                    echo $REPORT_FILE_NAME > REPORT_FILE_NAME.txt
+                                    echo "$REPORT_FILE_NAME" > REPORT_FILE_NAME.txt
                                     
                                     break
                                 else
@@ -295,14 +295,14 @@ generate_pdf_report(){
 }
 
 trigger_box_uploader_job(){
-    if [[ ! -z $REPORT_FILE_NAME && ! -z $JENKINS_USER  && ! -z $JENKINS_TOKEN && ! -z JENKINS_JOB_URL]]; then                        
+    if [[ ! -z $REPORT_FILE_NAME && ! -z $JENKINS_USER  && ! -z $JENKINS_TOKEN && ! -z JENKINS_JOB_URL ]]; then                        
         echo "Submitting scan report for Box upload"
         if [[ $JENKINS_JOB_URL != */ ]]; then
             JENKINS_JOB_URL="${JENKINS_JOB_URL}/"
         fi
         JENKINS_JOB_URL="${JENKINS_JOB_URL}buildWithParameters"
-        status=$(curl -w %{http_code} -s -u $JENKINS_USER:$JENKINS_TOKEN -F RECEPIENT=$APPSCAN_BOX_EMAIL -F REPORT_FILE_NAME=$REPORT_FILE_NAME \
-            -F ScanReportFile=@$REPORT_FILE_NAME -X POST $JENKINS_JOB_URL)
+        status=$(curl -w %{http_code} -s -u "$JENKINS_USER":"$JENKINS_TOKEN" -F RECEPIENT="$APPSCAN_BOX_EMAIL" -F REPORT_FILE_NAME="$REPORT_FILE_NAME" \
+            -F ScanReportFile=@"$REPORT_FILE_NAME" -X POST "$JENKINS_JOB_URL")
                 
         if [[ "$status" -eq 201 ]]; then
             echo "Scan report sent for Box upload successfully!"
