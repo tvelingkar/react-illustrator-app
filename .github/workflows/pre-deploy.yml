@@ -63,6 +63,3 @@ jobs:
       run: yarn build
       env:
         CI: true
-
-    - name: Run test
-      run: yarn test
