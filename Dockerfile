@@ -7,7 +7,6 @@ FROM node:alpine as builder
 COPY package.json ./
 COPY yarn.lock ./
 COPY .yarnrc ./
-COPY .npmrc ./
 
 # Install the dependencies and make the folder.
 RUN yarn install && mkdir /app && mv ./node_modules ./app
