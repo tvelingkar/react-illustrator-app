@@ -3,16 +3,16 @@
 # Use alias builder to be easier to refer this container elsewhere e.g inside nginx container.
 FROM node:alpine as builder
 
+# Set working directory. This is the working folder in the container from which the app will be running from.
+WORKDIR /app
+
 # Copy the package.json to install dependencies.
 COPY package.json ./
 COPY yarn.lock ./
 COPY .yarnrc ./
 
 # Install the dependencies and make the folder.
-RUN yarn install && mkdir /app && mv ./node_modules ./app
-
-# Set working directory. This is the working folder in the container from which the app will be running from.
-WORKDIR /app
+RUN yarn install
 
 # Copy everything to /app directory.
 COPY . .
