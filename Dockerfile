@@ -24,7 +24,7 @@ RUN yarn compress
 ###### Nginx ########
 
 # Set up production environment. The base image for this is an alpine based nginx image.
-FROM nginx:alpine
+FROM nginx:1.20-alpine
 
 # Replace with custom one.
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
