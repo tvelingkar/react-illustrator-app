@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@ibm/plex": "^5.2.1",
-    "carbon-components": "^10.43.0",
+    "carbon-components": "^10.56.0",
     "carbon-components-react": "^7.43.0",
     "carbon-icons": "^7.0.7",
     "lodash": "^4.17.21",
